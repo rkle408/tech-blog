@@ -2,7 +2,11 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/conenction");
 
-class Post extends Model {}
+class Post extends Model {
+    checkPassword(loginPassword) {
+        return bcrypt.compareSync(loginPassword, this.password)
+    }
+}
 
 User.init (
     {
@@ -17,7 +21,7 @@ User.init (
                 allowNull: false
         },
         password: {
-            
+
         }
     },
     {   hooks: {
@@ -35,7 +39,7 @@ User.init (
         timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: "user"
+        modelName: "User"
     }
 )
 
