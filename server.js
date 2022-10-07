@@ -1,9 +1,11 @@
-const express = require("express")
+const express = require("express");
+const sequelize = require("./config/conenction");
 const app = express();
 
 const PORT = process.env.PORT || 3001;
 
 // Middleware:
+app.use(express.static("public"))
 app.use(express.urlencoded({ extended: true}))
 app.use(express.json());
 
@@ -11,6 +13,6 @@ app.use(express.json());
 
 
 
-app.listen(PORT, () => {
-    console.log(`Event listening at: http://localhost:${PORT} 🚀`)
-})
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => console.log(`http://localhost:${PORT} 🚀`));
+}); 
