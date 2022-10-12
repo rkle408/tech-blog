@@ -95,8 +95,14 @@ app.post("/api/user/login", async (req, res) => {
     }
 })
 
-app.post("/api/user/logout", async(req, res) => {
-    
+app.post("/api/user/logout", async (req, res) => {
+    if(req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end()
+        })
+    } else {
+        res.status(404).end()
+    }
 })
 
 // app. post("/api/post")
