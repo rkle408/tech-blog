@@ -13,30 +13,25 @@
 -[License](#license)
 
 ## Installation
+```
+npm bcrypt connect-session-sequelize dotenv express express-handlebars express-session mysql2 sequelize
 
-npm i mysql2
-
-npm i express
-
-npm i sequelize
-
-npm i dotenv
-
-npm i bcrypt
+```
 
 ## Usage
 
 You will possibly need to add your own MySQL username and password to initiate MySQL.
 
 Open Integrated Terminal, run command:
-
+```
 node server.js
-
+```
 ### Screenshots
 
 
 ## Resources
 
+- Hoang, Andrew. Guidance given during class/office hours. Date accessed: October 7, 2022.
 
 
 ## License

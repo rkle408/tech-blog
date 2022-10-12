@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 3001;
 // Middleware:
 app.use(session(sess));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
 // Routes here for now, will move to routes folder later
@@ -79,5 +79,5 @@ app.post("/api/user/logout", async(req, res) => {
 // End of routes
 
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log(`http://localhost:${PORT} 🚀`));
+    app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT} 🚀`));
 }); 
