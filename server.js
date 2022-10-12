@@ -3,6 +3,10 @@ const sequelize = require("./config/connection");
 const session = require("express-session")
 const app = express();
 const path = require("path");
+const exphbs = require("express-handlebars");
+
+const helpers = require("./utils/helpers");
+
 
 // Connects this to the routes folder:
 const routes = require("./routes");
@@ -32,20 +36,16 @@ const sess = {
 
 // Middleware:
 app.use(session(sess));
+const hbs = exphbs.create({ helpers });
+app.use("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
+
 // Need some HTML:
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
-// Routes here for now, will move to routes folder later
-
-// This will bring us to the routes folder:
 app.use(routes);
-
-// app. post("/api/post")
-
-// app.post("/api/comment")
-// End of routes
 
 sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT} 🚀`));
