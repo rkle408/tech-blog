@@ -59,26 +59,39 @@ app.post("/api/user", async (req, res) => {
     }
 })
 
+// Validate a user logging in:
 app.post("/api/user/login", async (req, res) => {
     try {
+        // Find a matching username
         const user = await User.findOne({
             where: {
                 username: req.body.username
             }
         });
         if(!user) {
-            res.status(400).json({ message: "No user account found"})
+            res.status(400).json({ message: "Could not find user account!"})
+            // Then stop this part:
             return
         }
 
+        // If the user is found, then we need to validate the password:
         const validPassword = user.checkPassword(req.body.password);
 
         if(!validPassword) {
-            res.status(400).json({ message: "Not a valid password"})
+            res.status(400).json({ message: "This password does not match our records, please try again."})
             return
         }
+
+        req.session.save(() => {
+            req.session.userId = user.id;
+            req.session.username = user.username;
+            req.session.loggedIn = true
+
+            res.status(200).json({ user, message: "You are logged in!"})
+        })
+
     } catch(err) {
-        res.status(500).json(err)
+        res.status(400).json({ message: "No user or matching password found. Please try again." })
     }
 })
 
