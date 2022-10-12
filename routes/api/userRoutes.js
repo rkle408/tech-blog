@@ -3,7 +3,7 @@ const router = require("express").Router();
 // Need to get to the correct model folder:
 const { User } = require("../../models");
 const { Sequelize } = require("sequelize");
-router.post("/user", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const newUser= await User.create({
             username: req.body.username,
@@ -24,7 +24,7 @@ router.post("/user", async (req, res) => {
 })
 
 // Validate a user logging in:
-router.post("/user/login", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
         // Find a matching username
         const user = await User.findOne({
@@ -59,7 +59,7 @@ router.post("/user/login", async (req, res) => {
     }
 })
 
-router.post("/user/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
     if(req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end()
