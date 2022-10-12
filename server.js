@@ -4,6 +4,9 @@ const session = require("express-session")
 const app = express();
 const path = require("path");
 
+// Connects this to the routes folder:
+const routes = require("./routes");
+
 const PORT = process.env.PORT || 3001;
 
 // Database will be able to store sessions
@@ -36,6 +39,8 @@ app.use(express.json());
 
 // Routes here for now, will move to routes folder later
 
+// This will bring us to the routes folder:
+app.use(routes);
 
 // app. post("/api/post")
 
